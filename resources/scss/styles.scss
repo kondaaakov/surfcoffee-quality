@@ -1,0 +1,20 @@
+@import 'bootstrap/scss/bootstrap';
+
+* {
+    font-size: 18px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.nakedForm-container, .form-container {
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nakedForm-container {
+    height: 100vh;
+}
