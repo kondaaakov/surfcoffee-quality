@@ -18,7 +18,10 @@ class User extends Authenticatable
     ];
 
     protected $fillable = [
-        'login', 'email', 'avatar', 'group_id',
+        'login', 'email',
+        'phone', 'telegram_nickname',
+        'firstname', 'lastname',
+        'avatar', 'group_id',
         'active', 'password',
     ];
 

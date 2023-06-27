@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md bg-light">
+<nav class="navbar navbar-expand-md bg-light shadow-sm">
     <div class="container">
         <a href="{{ route('home') }}" class="navbar-brand">{{ config('app.name') }}</a>
 

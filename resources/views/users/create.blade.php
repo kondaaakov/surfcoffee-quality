@@ -4,7 +4,11 @@
 
 @section('forms.content')
     <div class="row justify-content-center">
-        <div class="bg-white col-xl-4 col-lg-6 col-md-8 col-sm-10 rounded-4 p-4">
+        <div class="bg-white col-xl-5 col-lg-6 col-md-8 col-sm-10 rounded-4 p-4">
+
+            <x-pageHeader>
+                <a href="{{ route('users') }}" class="link">Назад</a>
+            </x-pageHeader>
 
             <h1 class="display-6 text-center mb-4">{{ __('Создание пользователя') }}</h1>
 
@@ -12,6 +16,16 @@
 
             <form method="post" action="{{ route('users.store') }}" class="form">
                 @csrf
+
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">{{ __('Имя') }}</label>
+                    <input type="text" class="form-control" value="{{ old('firstname') }}" name="firstname" id="firstname" autocomplete="off" autofocus>
+                </div>
+
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">{{ __('Фамилия') }}</label>
+                    <input type="text" class="form-control" value="{{ old('lastname') }}" name="lastname" id="lastname" autocomplete="off" autofocus>
+                </div>
 
                 <div class="mb-3">
                     <label for="login" class="form-label">{{ __('Логин') }}</label>
@@ -26,6 +40,16 @@
                 <div class="mb-3">
                     <label for="email" class="form-label">{{ __('Почта') }}</label>
                     <input type="email" class="form-control" value="{{ old('email') }}" name="email" id="email" autocomplete="off" tabindex="1">
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">{{ __('Номер телефона') }}</label>
+                    <input type="tel" class="form-control" value="{{ old('phone') }}" name="phone" id="phone" autocomplete="off" autofocus>
+                </div>
+
+                <div class="mb-3">
+                    <label for="telegram_nickname" class="form-label">{{ __('Telegram') }}</label>
+                    <input type="text" class="form-control" value="{{ old('telegram_nickname') }}" name="telegram_nickname" id="telegram_nickname" autocomplete="off" autofocus>
                 </div>
 
                 <div class="mb-3">

@@ -14,11 +14,12 @@
         <div> {{ __('Записей не найдено') }} </div>
     @else
 
-        <table class="table">
+        <table class="table table-hover align-middle">
             <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Дата создания</th>
+                <th class="text-center" scope="col">ID</th>
+                <th class="text-center" scope="col">Дата создания</th>
+                <th scope="col">Фамилия, Имя</th>
                 <th scope="col">Логин</th>
                 <th scope="col">Почта</th>
                 <th scope="col">Группа</th>
@@ -28,8 +29,13 @@
             <tbody>
             @foreach($users as $user)
                 <tr>
-                    <th scope="row">{{ $user->id }}</th>
-                    <td>{{ $user->created_at->format('d.m.Y H:i') }}</td>
+                    <th class="text-center" scope="row">{{ $user->id }}</th>
+                    <td class="text-center">{{ $user->created_at->format('d.m.Y H:i') }}</td>
+                    <td>
+                        @if(!empty($user->lastname) && !empty($user->firstname))
+                            {{ $user->lastname }}, {{ $user->firstname }}
+                        @endif
+                    </td>
                     <td>{{ $user->login }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->title }}</td>
