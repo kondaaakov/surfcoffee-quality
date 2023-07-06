@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\UsersProfiles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -36,7 +35,7 @@ class UsersController extends Controller {
         $validated = $request->validate([
             'login'              => ['required', 'string', 'max:50', 'unique:users'],
             'email'              => ['required', 'string', 'max:50', 'email', 'unique:users'],
-            'password'           => ['required', 'string', 'max:50', 'min:7'],
+            'password'           => ['required', 'string', 'max:50', 'min:6'],
             'group_id'           => ['required'],
             'firstname'          => ['required', 'string'],
             'lastname'           => ['required', 'string'],
@@ -67,15 +66,50 @@ class UsersController extends Controller {
         return view('users.show', ['user' => $user, 'group' => $group]);
     }
 
-    public function edit($user) {
+    public function edit($id) {
+        $user   = User::findOrFail($id);
+        $groups = DB::table('users_groups')->get();
 
+        return view('users.edit', ['groups' => $groups, 'user' => $user]);
     }
 
-    public function update(Request $request, $post) {
+    public function update(Request $request, $id) {
+        $user = User::findOrFail($id);
+        $userArr = $user->toArray();
 
+        $validated = $request->validate([
+            'login'              => ['required', 'string', 'max:50'],
+            'email'              => ['required', 'string', 'max:50', 'email'],
+            'password'           => ['max:50'],
+            'group_id'           => ['required'],
+            'firstname'          => ['required', 'string'],
+            'lastname'           => ['required', 'string'],
+            'phone'              => ['required'],
+            'telegram_nickname'  => ['string'],
+            'active'             => ['nullable', 'boolean'],
+        ]);
+
+        $newFields = [];
+        foreach ($validated as $key => $item) {
+            if ($key === 'password' && $item !== null) {
+                $newFields[$key] = bcrypt($item);
+            } else if ($key === 'phone') {
+                $newFields[$key] = str_replace(['+', '(', ')', '-', ' '], '', $item);
+            } else if ($key !== 'password') {
+                $newFields[$key] = $item;
+            }
+        }
+        $newFields['active'] = !isset($newFields['active']) ? 0 : 1;
+
+        $user->fill($newFields)->save();
+
+        return redirect()->route('users.show', $id);
     }
 
-    public function delete($post) {
+    public function delete($user) {
+        $user = User::findOrFail($user);
 
+        $user->delete();
+        return redirect()->route('users');
     }
 }

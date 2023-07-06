@@ -27,13 +27,17 @@ class LoginController extends Controller {
         return back()->withErrors([
             'login' => 'Неверный логин или пароль!',
         ])->onlyInput('login');
+    }
 
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
 
-//        if (true) {
-//            return redirect()->back()->withInput();
-//        }
-//
-//        return redirect()->route('home');
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 
 }
