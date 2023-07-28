@@ -19,7 +19,7 @@
 
                 <div class="mb-4">
                     <label for="password" class="form-label">{{ __('Пароль') }}</label>
-                    <input type="password" class="form-control" name="password" id="password" tabindex="1">
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" tabindex="1">
                 </div>
 
                 <button class="btn btn-primary w-100" type="submit" tabindex="2">{{ __('Войти') }}</button>

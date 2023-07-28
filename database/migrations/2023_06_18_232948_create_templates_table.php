@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string('title');
-            $table->string('categories');
-            $table->timestamp('valid_until');
+            $table->longText('categories');
+            $table->boolean('active')->default(true);
         });
     }
 

@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('telegram_nickname');
-            $table->integer('phone');
+            $table->string('phone');
             $table->string('city');
             $table->string('status')->default('request');
         });

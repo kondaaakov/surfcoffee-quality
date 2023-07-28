@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md bg-light shadow-sm">
+<nav class="navbar navbar-expand-lg bg-light shadow-sm">
     <div class="container">
         <a href="{{ route('home') }}" class="navbar-brand">{{ config('app.name') }}</a>
 
@@ -15,8 +15,32 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{ route('spots') }}" class="nav-link {{ active_link('spots') }}" aria-current="page">
+                        {{ __('Споты') }}
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="{{ route('users') }}" class="nav-link {{ active_link('users*') }}" aria-current="page">
                         {{ __('Пользователи') }}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('guests') }}" class="nav-link {{ active_link('guests*') }}" aria-current="page">
+                        {{ __('Секретные гости') }}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('categories') }}" class="nav-link {{ active_link('categories*') }}" aria-current="page">
+                        {{ __('Категории') }}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('templates') }}" class="nav-link {{ active_link('templates*') }}" aria-current="page">
+                        {{ __('Шаблоны') }}
                     </a>
                 </li>
             </ul>

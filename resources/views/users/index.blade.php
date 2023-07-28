@@ -10,7 +10,7 @@
         </x-buttons.plusLink>
     </x-pageHeader>
 
-    @if(empty($users))
+    @if($users->isEmpty())
         <div> {{ __('Записей не найдено') }} </div>
     @else
 

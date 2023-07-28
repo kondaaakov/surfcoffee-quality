@@ -20,6 +20,12 @@ return new class extends Migration
 
             $table->integer('group_id')->default(1);
 
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
+
+            $table->string('phone')->nullable();
+            $table->string('telegram_nickname')->nullable();
+
             $table->string('avatar')->nullable();
             $table->boolean('active')->default(true);
 

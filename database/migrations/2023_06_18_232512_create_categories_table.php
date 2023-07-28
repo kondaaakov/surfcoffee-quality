@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->string('title');
 
-            $table->integer('weight')->unsigned()->nullable();
+            $table->decimal('weight')->unsigned()->nullable();
             $table->integer('include_in')->unsigned();
 
             $table->boolean('active')->default(true);

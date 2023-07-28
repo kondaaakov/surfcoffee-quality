@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users_profiles', function (Blueprint $table) {
+        Schema::create('spots', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
+            $table->integer('external_id')->unique();
+            $table->string('title')->nullable();
+            $table->string('city')->nullable();
+            $table->string('status')->default('worked');
+            $table->boolean('active')->default(true);
 
-            $table->string('firstname');
-            $table->string('lastname');
-
-            $table->integer('phone');
-            $table->string('telegram_nickname');
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users_profiles');
+        Schema::dropIfExists('spots');
     }
 };
