@@ -5,15 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Template extends Model
+class PollCategory extends Model
 {
     use HasFactory;
 
+    protected $table = 'polls_categories';
+
     protected $attributes = [
-        'active' => 1,
+        'rate'   => 0,
+        'result' => 0
     ];
 
     protected $fillable = [
-        'title', 'categories', 'active'
+        'poll_id', 'category_id', 'weight', 'rate', 'result'
     ];
 }

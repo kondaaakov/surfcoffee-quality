@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Poll;
 use App\Models\Template;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,8 +29,12 @@ class TemplateController extends Controller
             ->paginate($limit, ['id', 'created_at', 'title', 'categories', 'active']);
 
 
+        $templatesCountsPolls = [];
+        foreach ($templates as $template) {
+            $templatesCountsPolls[$template->id] = Poll::query()->where('template_id', $template->id)->get()->count();
+        }
 
-        return view('templates.index', ['templates' => $templates,]);
+        return view('templates.index', ['templates' => $templates, 'pollsCount' => $templatesCountsPolls]);
     }
 
     public function create() {

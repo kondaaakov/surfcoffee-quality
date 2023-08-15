@@ -32,16 +32,27 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('categories') }}" class="nav-link {{ active_link('categories*') }}" aria-current="page">
-                        {{ __('Категории') }}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ active_link(['categories*', 'templates*', 'polls*']) }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Опросы
                     </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('templates') }}" class="nav-link {{ active_link('templates*') }}" aria-current="page">
-                        {{ __('Шаблоны') }}
-                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ route('polls') }}" class="nav-link {{ active_link('polls*') }}" aria-current="page">
+                                {{ __('Опросы') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('categories') }}" class="nav-link {{ active_link('categories*') }}" aria-current="page">
+                                {{ __('Категории') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('templates') }}" class="nav-link {{ active_link('templates*') }}" aria-current="page">
+                                {{ __('Шаблоны') }}
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
 

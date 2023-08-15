@@ -18,7 +18,7 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="name" class="form-label">{{ __('Имя') }}</label>
+                    <label for="name" class="form-label">{{ __('ФИО') }}</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{ $entity->name ?? "" }}" name="name" id="name" autocomplete="off" autofocus>
                 </div>
 
@@ -53,7 +53,7 @@
                     </select>
                 </div>
 
-                <button class="btn btn-primary w-100" type="submit">{{ __('Создать') }}</button>
+                <button class="btn btn-primary w-100" type="submit">{{ __('Сохранить') }}</button>
             </form>
 
         </div>

@@ -41,6 +41,11 @@
                 <td class="fw-bold text-end p-2">Статус</td>
                 <td class="p-2">{{ $statuses[$spot->status] }}</td>
             </tr>
+
+            <tr>
+                <td class="fw-bold text-end p-2">Средняя оценка</td>
+                <td class="p-2">{!! $spot->rate() !!}</td>
+            </tr>
         </table>
 
     </section>

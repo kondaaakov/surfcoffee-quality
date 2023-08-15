@@ -24,7 +24,7 @@
                             <p class="mb-0 badge text-bg-secondary">{{ $categoryLvl1['weight'] }}</p>
                         @endif
 
-                        <div class="btn-group" role="group">
+                        <div class="btn-group ms-2" role="group">
                             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
                             </button>

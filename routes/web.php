@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PollsController;
 use App\Http\Controllers\SecretGuestsController;
 use App\Http\Controllers\SpotsController;
 use App\Http\Controllers\TemplateController;
@@ -67,8 +68,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/spots/delete/{id}', [SpotsController::class, 'delete'])->name('spots.delete');
     Route::get('/spots/archive/{id}', [SpotsController::class, 'archive'])->name('spots.archive');
     Route::get('/spots/unarchive/{id}', [SpotsController::class, 'unarchive'])->name('spots.unarchive');
-});
 
+    Route::get('/polls', [PollsController::class, 'list'])->name('polls');
+    Route::get('/polls/create', [PollsController::class, 'create'])->name('polls.create');
+    Route::get('/polls/{id}', [PollsController::class, 'show'])->name('polls.show');
+    Route::post('/polls', [PollsController::class, 'store'])->name('polls.store');
+    Route::get('/polls/{id}/close', [PollsController::class, 'close'])->name('polls.close');
+});
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+
+Route::get('/poll/thanks', [PollsController::class, 'thanks'])->name('poll.thanks');
+Route::get('/poll/{string}', [PollsController::class, 'index'])->name('poll');
+Route::post('/poll', [PollsController::class, 'answer'])->name('poll.answer');

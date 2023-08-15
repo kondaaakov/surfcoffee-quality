@@ -18,8 +18,8 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="name" class="form-label">{{ __('Имя') }}</label>
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" name="name" id="name" autocomplete="off" autofocus>
+                    <label for="name" class="form-label">{{ __('ФИО') }}</label>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" name="name" id="name" autocomplete="off" autofocus placeholder="Иванов Иван Иванович">
                 </div>
 
                 <div class="mb-3">
@@ -34,7 +34,7 @@
 
                 <div class="mb-3">
                     <label for="phone" class="form-label">{{ __('Телефон') }}</label>
-                    <input type="tel" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" name="phone" id="phone" autocomplete="off">
+                    <input type="tel" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" name="phone" id="phone" autocomplete="off" placeholder="8 (987) 654-3210">
                 </div>
 
                 <div class="mb-3">

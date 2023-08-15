@@ -19,7 +19,7 @@
             <tr>
                 <th class="text-center" scope="col">ID</th>
                 <th class="text-center" scope="col">Дата создания</th>
-                <th scope="col">Имя</th>
+                <th scope="col">ФИО</th>
                 <th scope="col">Телеграм</th>
                 <th scope="col">Телефон</th>
                 <th scope="col">Город</th>
@@ -31,7 +31,7 @@
             @foreach($guests as $guest)
                 <tr>
                     <th class="text-center" scope="row">{{ $guest->id }}</th>
-                    <td class="text-center">{{ $guest->created_at->format('d.m.Y H:i') }}</td>
+                    <td class="text-center">{{ $guest->created_at->format('d.m.Y в H:i') }}</td>
                     <td>{{ $guest->name }}</td>
                     <td><a target="_blank" href="{{ 'https://t.me/' . $guest->telegram_nickname }}">{{ '@' . $guest->telegram_nickname }}</a></td>
                     <td>{{ $guest->phone }}</td>

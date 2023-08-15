@@ -26,16 +26,10 @@ class Spot extends Model
             $rate = "нет оценки";
         }
 
-        return "<span class='fw-bold fs-4'>$rate</span>";
+        return "$rate";
     }
 
     private function getRate() : int {
-        $reviews = DB::table('secret_guests_reviews')->where(['spot_id' => $this->external_id])->get();
-
-        if ($reviews->isNotEmpty()) {
-            return 5;
-        } else {
-            return 0;
-        }
+        return DB::table('polls')->where("spot_id", $this->id)->avg('result');
     }
 }
