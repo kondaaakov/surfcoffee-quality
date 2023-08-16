@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Poll;
 use App\Models\Spot;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -58,8 +59,13 @@ class SpotsController extends Controller
 
     public function show($id) : View {
         $spot = Spot::findOrFail($id);
+        $polls = Poll::query()
+            ->where([['polls.spot_id', $id], ['polls.closed', 1], ['polls.result', '!=', 'null']])
+            ->leftJoin('secret_guests', 'polls.secret_guest_id', '=', 'secret_guests.id')
+            ->oldest("polls.id")
+            ->get(['polls.*', 'secret_guests.name as guest_name', 'secret_guests.city as guest_city']);
 
-        return view('spots.show', ['spot' => $spot, 'statuses' => $this->statuses]);
+        return view('spots.show', ['spot' => $spot, 'statuses' => $this->statuses, 'polls' => $polls]);
     }
 
     public function edit($id) : View {

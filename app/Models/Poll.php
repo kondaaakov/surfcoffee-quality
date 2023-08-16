@@ -14,7 +14,7 @@ class Poll extends Model
     ];
 
     protected $fillable = [
-        'template_id', 'spot_id', 'secret_guest_id', 'until_at', 'closed', 'result', 'closed_at'
+        'template_id', 'spot_id', 'secret_guest_id', 'until_at', 'closed', 'result', 'closed_at', 'receipt', 'comment'
     ];
 
     protected $casts = [

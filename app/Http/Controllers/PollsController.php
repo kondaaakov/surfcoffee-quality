@@ -8,11 +8,12 @@ use App\Models\PollCategory;
 use App\Models\SecretGuest;
 use App\Models\Spot;
 use App\Models\Template;
+use Intervention\Image\Facades\Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class PollsController extends Controller
@@ -22,8 +23,7 @@ class PollsController extends Controller
         $encrypt     = encrypt_decrypt('decrypt', $id);
         $parameters  = explode(", ", $encrypt);
         $parameters  = [
-            'poll_id' => $parameters[0],
-            'secret_guest_id' => $parameters[1]
+            'poll_id' => $parameters[0]
         ];
 
         $poll = Poll::findOrFail($parameters['poll_id']);
@@ -92,9 +92,15 @@ class PollsController extends Controller
     }
 
     public function answer(Request $request) : RedirectResponse {
-        if ($request->isMethod('post') && isset($request['poll_id'])) {
+        $poll = Poll::find($request['poll_id']);
 
+        if ($request->isMethod('post') && isset($request['poll_id']) && $poll->closed == 0) {
             $categoriesOfPoll = PollCategory::query()->where('poll_id', $request['poll_id'])->get()->toArray();
+
+            $data = $request->validate([
+                'comment' => ['nullable'],
+                'receipt' => ['required', 'file', 'mimes:jpg,bmp,png,heic,jpeg,gif']
+            ]);
 
             $rates = [];
             foreach ($request->toArray() as $key => $item) {
@@ -125,12 +131,20 @@ class PollsController extends Controller
                 }
             }
             $pollResult = 0.01 * (int) ( $pollResult * 100 );
+            $now        = Carbon::now();
+            $file       = $request->file('receipt');
+            $fileName   = "poll_{$request['poll_id']}_{$now->format('Y_m_d_H_i_s')}.{$file->extension()}";
 
-            $poll = Poll::find($request['poll_id']);
+            $path = Storage::putFileAs(
+                'public/receipts', $file, $fileName
+            );
+
             $poll->fill([
                 'result' => $pollResult,
                 'closed' => 1,
-                'closed_at' => Carbon::now()
+                'closed_at' => $now,
+                'receipt' => $fileName,
+                'comment' => $request['comment'] ?? ''
             ])->save();
 
             foreach ($categories as $category) {
@@ -165,7 +179,7 @@ class PollsController extends Controller
             ->leftJoin('secret_guests', 'polls.secret_guest_id', '=', 'secret_guests.id')
             ->leftJoin('spots', 'polls.spot_id', '=', 'spots.id')
             ->select([
-                'polls.id', 'polls.created_at', 'polls.template_id', 'polls.secret_guest_id', 'polls.spot_id', 'polls.closed', 'polls.until_at', 'polls.closed_at', 'polls.result',
+                'polls.id', 'polls.created_at', 'polls.template_id', 'polls.secret_guest_id', 'polls.spot_id', 'polls.closed', 'polls.until_at', 'polls.closed_at', 'polls.result', 'polls.comment', 'polls.receipt',
                 'templates.title as template_title',
                 'secret_guests.name as guest_name', 'secret_guests.city as guest_city',
                 'spots.title as spot_title', 'spots.city as spot_city',

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Poll;
 use App\Models\SecretGuest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class SecretGuestsController extends Controller
 {
@@ -15,7 +18,7 @@ class SecretGuestsController extends Controller
         '4' => 'Отказано'
     ];
 
-    public function index(Request $request) {
+    public function index(Request $request) : View {
         $validated = $request->validate([
             'limit' => ['nullable', 'integer', 'min:1', 'max:100'],
             'page' => ['nullable', 'integer', 'min:1'],
@@ -32,7 +35,7 @@ class SecretGuestsController extends Controller
         return view('guests.create', ['statuses' => $this->statuses]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request) : RedirectResponse {
         $validated = $request->validate([
             'name'               => ['required', 'string', 'max:50'],
             'city'               => ['required', 'string'],
@@ -41,7 +44,7 @@ class SecretGuestsController extends Controller
             'telegram_nickname'  => ['required', 'string', 'unique:secret_guests'],
         ]);
 
-        $guest = SecretGuest::query()->create([
+        SecretGuest::query()->create([
             'name'              => strtolower($validated['name']),
             'telegram_nickname' => strtolower($validated['telegram_nickname']),
             'city'              => $validated['city'],
@@ -52,19 +55,25 @@ class SecretGuestsController extends Controller
         return redirect()->route('guests');
     }
 
-    public function show($guest) {
-        $guest = SecretGuest::findOrFail($guest);
+    public function show($id) : View {
+        $guest = SecretGuest::findOrFail($id);
+        $polls = Poll::query()
+            ->leftJoin('spots', 'polls.spot_id', '=', 'spots.id')
+            ->where('polls.secret_guest_id', $id)
+            ->latest('polls.id')
+            ->get(['polls.*', 'spots.title as spot_title', 'spots.city as spot_city'])
+        ;
 
-        return view('guests.show', ['entity' => $guest, 'statuses' => $this->statuses]);
+        return view('guests.show', ['entity' => $guest, 'statuses' => $this->statuses, 'polls' => $polls]);
     }
 
-    public function edit($guest) {
+    public function edit($guest) : View {
         $guest = SecretGuest::findOrFail($guest);
 
         return view('guests.edit', ['entity' => $guest, 'statuses' => $this->statuses]);
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id) : RedirectResponse {
         $guest = SecretGuest::findOrFail($id);
 
         $validated = $request->validate([
@@ -80,7 +89,7 @@ class SecretGuestsController extends Controller
         return redirect()->route('guests.show', $id);
     }
 
-    public function delete($guest) {
+    public function delete($guest) : RedirectResponse {
         $guest = SecretGuest::findOrFail($guest);
 
         $guest->delete();

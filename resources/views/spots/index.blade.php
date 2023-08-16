@@ -23,7 +23,7 @@
                         <h5 class="card-title">{{ "Surf Coffee® x $spot->title" }} {{ $spot->active ? "" : "[Архив]" }}</h5>
                         <h6 class="card-subtitle mb-4 text-body-secondary">{{ "#$spot->external_id" }}, {{ "г. $spot->city" }}</h6>
 
-                        <p class="mb-2 fs-5 fw-light">Средняя оценка: {!! $spot->rate() !!}</p>
+                        <p class="mb-2 fs-5 fw-light">Средняя оценка: {!! $spot->rate('fs-5') !!}</p>
 
                         <div class="card-bottom d-flex justify-content-end align-items-center">
                             <a href="{{ route('spots.show', $spot->id) }}" class="card-link small">перейти</a>

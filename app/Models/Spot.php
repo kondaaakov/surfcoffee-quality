@@ -19,17 +19,23 @@ class Spot extends Model
         'city', 'status', 'active'
     ];
 
-    public function rate() : string {
+    public function rate($classes = '') : string {
         $rate = $this->getRate();
 
         if ($rate === 0) {
             $rate = "нет оценки";
+        } else if ($rate >= 80) {
+            $rate = "<span class='fw-bold text-success $classes'>$rate</span>";
+        } else if ($rate >= 50) {
+            $rate = "<span class='fw-bold text-warning $classes'>$rate</span>";
+        } else {
+            $rate = "<span class='fw-bold text-danger $classes'>$rate</span>";
         }
 
-        return "$rate";
+        return $rate;
     }
 
     private function getRate() : int {
-        return DB::table('polls')->where("spot_id", $this->id)->avg('result');
+        return DB::table('polls')->where("spot_id", $this->id)->avg('result') ?? 0;
     }
 }

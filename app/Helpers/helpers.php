@@ -164,3 +164,15 @@ function encrypt_decrypt($action, $string) {
     }
     return $output;
 }
+
+function coloredRate(float $rate, string $classes = '') : string {
+    if ($rate == 0) {
+        return "нет оценки";
+    } else if ($rate >= 80) {
+        return "<span class='text-success $classes'>$rate</span>";
+    } else if ($rate >= 50) {
+        return "<span class='text-warning $classes'>$rate</span>";
+    } else {
+        return "<span class='text-danger $classes'>$rate</span>";
+    }
+}

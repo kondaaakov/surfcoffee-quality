@@ -10,6 +10,8 @@
             @csrf
             <input type="hidden" value="{{ $pollId }}" name="poll_id">
 
+            <x-errors />
+
             @foreach($categories as $category)
                 <section class="mb-5">
                     <h2 class="poll-section-title text-center">Раздел "{{ $category['title'] }}"</h2>
@@ -65,14 +67,14 @@
             <section class="mb-5">
                 <h2 class="poll-section-title text-center mb-3">Фотография чека</h2>
                 <div class="mb-3">
-                    <input class="form-control" type="file" id="receipt" accept="image/*, image/heic" name="receipt">
+                    <input class="form-control @error('receipt') is-invalid @enderror" type="file" id="receipt" accept="image/*, image/heic" name="receipt">
                 </div>
             </section>
 
             <div class="mb-5">
                 <h2 class="poll-section-title text-center mb-3">Комментарий</h2>
                 <div class="mb-3">
-                    <textarea class="form-control" id="comment" name="comment" placeholder="Необязательно" rows="3"></textarea>
+                    <textarea class="form-control" id="comment" name="comment" placeholder="Необязательно" rows="3">{{ old("comment") }}</textarea>
                 </div>
             </div>
 

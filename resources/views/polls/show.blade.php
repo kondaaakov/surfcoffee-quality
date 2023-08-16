@@ -34,7 +34,24 @@
 
             <tr>
                 <td class="fw-bold text-end p-2">Результат</td>
-                <td class="p-2">{{ $poll->result ?? 0 }}</td>
+                <td class="p-2">{!! coloredRate($poll->result ?? 0) !!}</td>
+            </tr>
+
+            <tr>
+                <td class="fw-bold text-end p-2">Комментарий</td>
+                <td class="p-2">{{ $poll->comment ?? "Комментарий отсутствует" }}</td>
+            </tr>
+
+            <tr>
+                <td class="fw-bold text-end p-2">Фото чека</td>
+                <td class="p-2">
+                    @if(!empty($poll->receipt))
+                        <img style="max-width: 400px" class="img-thumbnail" src="{{ Storage::url('receipts/'.$poll->receipt) }}" alt="фото чека">
+                    @else
+                        Фотография чека по каким-либо причинам отсутствует
+                    @endif
+
+                </td>
             </tr>
 
             <tr>
