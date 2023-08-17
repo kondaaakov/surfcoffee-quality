@@ -67,7 +67,7 @@
             <section class="mb-5">
                 <h2 class="poll-section-title text-center mb-3">Фотография чека</h2>
                 <div class="mb-3">
-                    <input class="form-control @error('receipt') is-invalid @enderror" type="file" id="receipt" accept="image/*, image/heic" name="receipt">
+                    <input class="form-control @error('receipt') is-invalid @enderror" type="file" id="receipt" accept="image/*" name="receipt">
                 </div>
             </section>
 

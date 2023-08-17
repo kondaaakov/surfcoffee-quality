@@ -17,6 +17,7 @@ return new class extends Migration
 
             $table->integer('poll_id');
             $table->integer('category_id');
+            $table->integer('include_in_id');
 
             $table->decimal('weight')->unsigned()->nullable();
             $table->integer('rate')->unsigned()->nullable();

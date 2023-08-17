@@ -19,8 +19,13 @@ return new class extends Migration
             $table->integer('spot_id');
             $table->integer('secret_guest_id');
 
+            $table->decimal('result')->unsigned()->nullable();
+            $table->text('comment')->nullable();
+            $table->string('receipt')->nullable();
+
             $table->date('until_at');
             $table->boolean('closed')->default(false);
+            $table->dateTime('closed_at')->nullable();
         });
     }
 

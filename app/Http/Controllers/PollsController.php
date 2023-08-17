@@ -15,6 +15,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Maestroerror\HeicToJpg;
 
 class PollsController extends Controller
 {
@@ -99,7 +100,7 @@ class PollsController extends Controller
 
             $data = $request->validate([
                 'comment' => ['nullable'],
-                'receipt' => ['required', 'file', 'mimes:jpg,bmp,png,heic,jpeg,gif']
+                'receipt' => ['required', 'file', 'mimes:jpg,bmp,png,jpeg,gif']
             ]);
 
             $rates = [];
@@ -131,13 +132,17 @@ class PollsController extends Controller
                 }
             }
             $pollResult = 0.01 * (int) ( $pollResult * 100 );
+            if ($pollResult == 99) $pollResult = 100;
             $now        = Carbon::now();
             $file       = $request->file('receipt');
-            $fileName   = "poll_{$request['poll_id']}_{$now->format('Y_m_d_H_i_s')}.{$file->extension()}";
+            $fileName   = "poll_{$request['poll_id']}_{$now->format('Y_m_d_H_i_s')}.jpg";
 
-            $path = Storage::putFileAs(
-                'public/receipts', $file, $fileName
-            );
+            Image::make($file)->save(Storage::path('/public/receipts/').$fileName, 60, 'jpg');
+
+
+//            $path = Storage::putFileAs(
+//                'public/receipts', $file, $fileName
+//            );
 
             $poll->fill([
                 'result' => $pollResult,

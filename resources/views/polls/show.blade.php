@@ -19,17 +19,22 @@
 
             <tr>
                 <td class="fw-bold text-end p-2">Шаблон</td>
-                <td class="p-2"><a target="_blank" href="{{ route('templates.show', $poll->template_id) }}">{{ $poll->template_title }} <i class="ms-2 bi bi-box-arrow-up-right"></i></a></td>
+                <td class="p-2"><a target="_blank" href="{{ route('templates.show', $poll->template_id) }}">{{ $poll->template_title }} <i class="ms-1 bi bi-box-arrow-up-right"></i></a></td>
             </tr>
 
             <tr>
                 <td class="fw-bold text-end p-2">Спот</td>
-                <td class="p-2"><a target="_blank" href="{{ route('spots.show', $poll->spot_id) }}">Surf Coffee® x {{ $poll->spot_title }} ({{ $poll->spot_city }}) <i class="ms-2 bi bi-box-arrow-up-right"></i></a></td>
+                <td class="p-2"><a target="_blank" href="{{ route('spots.show', $poll->spot_id) }}">Surf Coffee® x {{ $poll->spot_title }} ({{ $poll->spot_city }}) <i class="ms-1 bi bi-box-arrow-up-right"></i></a></td>
             </tr>
 
             <tr>
                 <td class="fw-bold text-end p-2">Тайный гость</td>
-                <td class="p-2"><a target="_blank" href="{{ route('guests.show', $poll->secret_guest_id) }}">{{ $poll->guest_name }} ({{ $poll->guest_city }}) <i class="ms-2 bi bi-box-arrow-up-right"></i></a></td>
+                <td class="p-2">
+                    <a target="_blank" href="{{ route('guests.show', $poll->secret_guest_id) }}">
+                        {{ $poll->guest_name }} ({{ $poll->guest_city }})
+                        <i class="ms-1 bi bi-box-arrow-up-right"></i>
+                    </a>
+                </td>
             </tr>
 
             <tr>
