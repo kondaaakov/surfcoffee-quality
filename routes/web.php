@@ -20,25 +20,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/users', [UsersController::class, 'index'])->name('users');
-Route::get('/users/create', [UsersController::class, 'create'])->name('users.create');
-Route::get('/users/{user}', [UsersController::class, 'show'])->name('users.show');
-Route::get('/users/{user}/edit', [UsersController::class, 'edit'])->name('users.edit');
-Route::post('/users', [UsersController::class, 'store'])->name('users.store');
-Route::post('/users/{user}', [UsersController::class, 'update'])->name('users.update');
-Route::get('/users/delete/{user}', [UsersController::class, 'delete'])->name('users.delete');
+
 
 Route::middleware('auth')->group(function () {
     Route::view('/', 'home.index')->name('home');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-//    Route::get('/users', [UsersController::class, 'index'])->name('users');
-//    Route::get('/users/create', [UsersController::class, 'create'])->name('users.create');
-//    Route::get('/users/{user}', [UsersController::class, 'show'])->name('users.show');
-//    Route::get('/users/{user}/edit', [UsersController::class, 'edit'])->name('users.edit');
-//    Route::post('/users', [UsersController::class, 'store'])->name('users.store');
-//    Route::post('/users/{user}', [UsersController::class, 'update'])->name('users.update');
-//    Route::get('/users/delete/{user}', [UsersController::class, 'delete'])->name('users.delete');
+    Route::get('/users', [UsersController::class, 'index'])->name('users');
+    Route::get('/users/create', [UsersController::class, 'create'])->name('users.create');
+    Route::get('/users/{user}', [UsersController::class, 'show'])->name('users.show');
+    Route::get('/users/{user}/edit', [UsersController::class, 'edit'])->name('users.edit');
+    Route::post('/users', [UsersController::class, 'store'])->name('users.store');
+    Route::post('/users/{user}', [UsersController::class, 'update'])->name('users.update');
+    Route::get('/users/delete/{user}', [UsersController::class, 'delete'])->name('users.delete');
 
     Route::get('/guests', [SecretGuestsController::class, 'index'])->name('guests');
     Route::get('/guests/create', [SecretGuestsController::class, 'create'])->name('guests.create');

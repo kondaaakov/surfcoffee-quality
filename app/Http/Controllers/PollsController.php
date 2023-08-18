@@ -84,6 +84,7 @@ class PollsController extends Controller
                 'poll_id' => $pollId,
                 'category_id' => $category->id,
                 'weight' => $category->weight,
+                'include_in_id' => $category->include_in
             ]);
         }
 

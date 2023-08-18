@@ -13,10 +13,10 @@ class PollCategory extends Model
 
     protected $attributes = [
         'rate'   => 0,
-        'result' => 0
+        'result' => 0,
     ];
 
     protected $fillable = [
-        'poll_id', 'category_id', 'weight', 'rate', 'result'
+        'poll_id', 'category_id', 'weight', 'rate', 'result', 'include_in_id'
     ];
 }
