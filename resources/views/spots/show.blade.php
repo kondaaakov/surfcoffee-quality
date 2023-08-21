@@ -49,9 +49,9 @@
         </table>
 
         <div class="reviews">
-            <h3 class="display-6">Проверки</h3>
+            <h3 class="display-6 mb-4">Проверки</h3>
 
-            @if(!empty($polls))
+            @if(!$polls->isEmpty())
                 <table class="table table-striped table-hover align-middle w-auto">
                     <thead>
                     <tr>
