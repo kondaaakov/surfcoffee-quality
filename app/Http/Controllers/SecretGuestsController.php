@@ -55,6 +55,25 @@ class SecretGuestsController extends Controller
         return redirect()->route('guests');
     }
 
+    public function storeApi(Request $request) : string {
+        $validated = $request->validate([
+            'name'               => ['required', 'string', 'max:100'],
+            'city'               => ['required', 'string'],
+            'phone'              => ['required'],
+            'telegram_nickname'  => ['required', 'string', 'unique:secret_guests'],
+        ]);
+
+        SecretGuest::query()->create([
+            'name'              => $validated['name'],
+            'telegram_nickname' => strtolower($validated['telegram_nickname']),
+            'city'              => $validated['city'],
+            'status'            => 1,
+            'phone'             => str_replace(['+', '(', ')', '-', ' '], '', $validated['phone']),
+        ]);
+
+        return "ok";
+    }
+
     public function show($id) : View {
         $guest = SecretGuest::findOrFail($id);
         $polls = Poll::query()
