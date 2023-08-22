@@ -63,6 +63,26 @@ return [
             ]) : [],
         ],
 
+        'supportBot' => [
+            'driver' => 'mysql',
+            'url' => null,
+            'host' => "194.87.103.78",
+            'port' => '3306',
+            'database' => "support_bot",
+            'username' => "surfbot",
+            'password' => "EJkJbX8zUKZF0oCc2s5Q",
+            'unix_socket' => '',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

@@ -17,7 +17,6 @@
                 @else
                     <a href="{{ route("spots.unarchive", $spot->id) }}" onclick="return confirm('Разархивировать спот Surf Coffee® x {{ $spot->title }}?')" class="link text-warning">Разархивировать</a>
                 @endif
-
             </p>
 
             <p class="small text-muted mb-0"><b>Дата создания:</b> {{ $spot->created_at->format('d.m.Y H:i') }}. <b>Дата изменения:</b> {{ $spot->updated_at->format('d.m.Y H:i') }}</p>

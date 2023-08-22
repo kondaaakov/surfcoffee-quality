@@ -55,7 +55,7 @@ class SecretGuestsController extends Controller
         return redirect()->route('guests');
     }
 
-    public function storeApi(Request $request) : string {
+    public function storeApi(Request $request) {
         $validated = $request->validate([
             'name'               => ['required', 'string', 'max:100'],
             'city'               => ['required', 'string'],
@@ -71,7 +71,7 @@ class SecretGuestsController extends Controller
             'phone'             => str_replace(['+', '(', ')', '-', ' '], '', $validated['phone']),
         ]);
 
-        return "ok";
+        return response('ok', 200);
     }
 
     public function show($id) : View {
