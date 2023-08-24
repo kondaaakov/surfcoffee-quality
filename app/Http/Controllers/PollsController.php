@@ -35,17 +35,12 @@ class PollsController extends Controller
             abort(404, "Дата опроса просрочена");
         }
 
-
         $spotTitle = DB::table('spots')->select('title')->where('id', $poll->spot_id)->first();
         $spotTitle = "Surf Coffee® x $spotTitle->title";
-
 
         $pollsCategories = buildTreePoll(PollCategory::query()->where('poll_id', $poll->id)->get()->toArray());
 
         return view('polls.poll', ['title' => $spotTitle, 'categories' => $pollsCategories, 'pollId' => $parameters['poll_id']]);
-
-        // сборка пулла: сам пулл, данные о кофейне, данные о сроке ДО, категории
-        // передача всех этих данных в шаблон
     }
 
     public function create() : View {
@@ -88,7 +83,8 @@ class PollsController extends Controller
             ]);
         }
 
-        // отправка опроса и криптовой ссылки тайнику в ЛС с информацией
+        sendSecretGuestPoll($poll->secret_guest_id, $poll);
+        sendCreatePollNotify($poll);
 
         return redirect()->route('polls');
     }
@@ -139,11 +135,6 @@ class PollsController extends Controller
             $fileName   = "poll_{$request['poll_id']}_{$now->format('Y_m_d_H_i_s')}.jpg";
 
             Image::make($file)->save(Storage::path('/public/receipts/').$fileName, 60, 'jpg');
-
-
-//            $path = Storage::putFileAs(
-//                'public/receipts', $file, $fileName
-//            );
 
             $poll->fill([
                 'result' => $pollResult,
@@ -213,7 +204,7 @@ class PollsController extends Controller
                 ->leftJoin('secret_guests', 'polls.secret_guest_id', '=', 'secret_guests.id')
                 ->leftJoin('spots', 'polls.spot_id', '=', 'spots.id')
                 ->where([['template_id', $validated['template_id']]])
-                ->oldest('polls.id')
+                ->latest('polls.id')
                 ->paginate($limit, [
                     'polls.id', 'polls.created_at', 'polls.template_id', 'polls.secret_guest_id', 'polls.spot_id', 'polls.closed', 'polls.until_at', 'polls.closed_at', 'polls.result',
                     'templates.title as template_title',
@@ -225,7 +216,7 @@ class PollsController extends Controller
                 ->leftJoin('templates', 'polls.template_id', '=', 'templates.id')
                 ->leftJoin('secret_guests', 'polls.secret_guest_id', '=', 'secret_guests.id')
                 ->leftJoin('spots', 'polls.spot_id', '=', 'spots.id')
-                ->oldest('polls.id')
+                ->latest('polls.id')
                 ->paginate($limit, [
                     'polls.id', 'polls.created_at', 'polls.template_id', 'polls.secret_guest_id', 'polls.spot_id', 'polls.closed', 'polls.until_at', 'polls.closed_at', 'polls.result',
                     'templates.title as template_title',

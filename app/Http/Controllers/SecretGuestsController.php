@@ -44,32 +44,39 @@ class SecretGuestsController extends Controller
             'telegram_nickname'  => ['required', 'string', 'unique:secret_guests'],
         ]);
 
-        SecretGuest::query()->create([
-            'name'              => strtolower($validated['name']),
+        $guest = SecretGuest::query()->create([
+            'name'              => $validated['name'],
             'telegram_nickname' => strtolower($validated['telegram_nickname']),
             'city'              => $validated['city'],
             'status'            => $validated['status'],
             'phone'             => str_replace(['+', '(', ')', '-', ' '], '', $validated['phone']),
         ]);
 
+        sendNewSecretNotify($guest, 'handmade');
+
         return redirect()->route('guests');
     }
 
     public function storeApi(Request $request) {
-        $validated = $request->validate([
-            'name'               => ['required', 'string', 'max:100'],
-            'city'               => ['required', 'string'],
-            'phone'              => ['required'],
-            'telegram_nickname'  => ['required', 'string', 'unique:secret_guests'],
+//        $validated = $request->validate([
+//            'name'               => ['required', 'string', 'max:100'],
+//            'city'               => ['required', 'string'],
+//            'phone'              => ['required'],
+//            'telegram_nickname'  => ['required', 'string', 'unique:secret_guests'],
+//        ]);
+
+        $guest = SecretGuest::query()->create([
+            'name'              => $request->name,
+            'telegram_nickname' => strtolower($request->telegram_nickname),
+            'city'              => $request->city,
+            'status'            => 1,
+            'phone'             => str_replace(['+', '(', ')', '-', ' '], '', $request->phone),
         ]);
 
-        SecretGuest::query()->create([
-            'name'              => $validated['name'],
-            'telegram_nickname' => strtolower($validated['telegram_nickname']),
-            'city'              => $validated['city'],
-            'status'            => 1,
-            'phone'             => str_replace(['+', '(', ')', '-', ' '], '', $validated['phone']),
-        ]);
+        if ($guest) {
+            sendNewSecretNotify($guest);
+        }
+
 
         return response('ok', 200);
     }
@@ -102,6 +109,10 @@ class SecretGuestsController extends Controller
             'phone'              => ['required'],
             'telegram_nickname'  => ['required', 'string', Rule::unique('secret_guests', 'telegram_nickname')->ignore($guest->id)],
         ]);
+
+        if ($guest->status !== $validated['status']) {
+            sendSecretGuestChangeStatus($guest, $this->statuses[$validated['status']]);
+        }
 
         $guest->fill($validated)->save();
 
