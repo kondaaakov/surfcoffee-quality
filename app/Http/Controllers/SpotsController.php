@@ -66,7 +66,7 @@ class SpotsController extends Controller
             ->oldest("polls.id")
             ->get(['polls.*', 'secret_guests.name as guest_name', 'secret_guests.city as guest_city']);
 
-        return view('spots.show', ['spot' => $spot, 'statuses' => $this->statuses, 'polls' => $polls, 'some' => $some]);
+        return view('spots.show', ['spot' => $spot, 'statuses' => $this->statuses, 'polls' => $polls]);
     }
 
     public function edit($id) : View {
