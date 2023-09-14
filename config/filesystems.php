@@ -70,7 +70,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path(env('filesystem_disk') == 'local' ? 'app/public' : 'app'),
+        public_path('storage') => storage_path('app/public'),
     ],
 
 ];
