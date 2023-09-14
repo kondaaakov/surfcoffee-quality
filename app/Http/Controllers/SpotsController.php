@@ -24,12 +24,20 @@ class SpotsController extends Controller
         ]);
 
         $limit = $validated['limit'] ?? 12;
+        $where = [];
+
+        if (isset($_GET['active']) && $_GET['active'] == 0) {
+            $where[] = ['active', '=', 0];
+        } else {
+            $where[] = ['active', '=', 1];
+        }
+
+
 
         $spots = Spot::query()
-//            ->where([
-//                ['external_id', '>', 210],
-//                ['title', 'like', '%Dyb%']
-//            ])
+            ->where(
+                $where
+            )
             ->oldest('external_id')
             ->paginate($limit, ['id', 'external_id', 'title', 'city', 'status', 'active']);
 

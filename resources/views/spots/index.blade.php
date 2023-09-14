@@ -8,6 +8,13 @@
         <x-buttons.plusLink route="{{ route('spots.create') }}">
             Добавить новый спот
         </x-buttons.plusLink>
+
+        @if(isset($_GET['active']) && $_GET['active'] == 0)
+            <a class="ms-3 small" href="{{ route('spots') }}">Показать актуальные</a>
+        @else
+            <a class="ms-3 small" href="{{ route('spots', ["active" => 0]) }}">Показать архивные</a>
+        @endif
+
     </x-pageHeader>
 
     @if($spots->isEmpty())
