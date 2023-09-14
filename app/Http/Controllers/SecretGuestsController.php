@@ -58,12 +58,13 @@ class SecretGuestsController extends Controller
     }
 
     public function storeApi(Request $request) {
-//        $validated = $request->validate([
-//            'name'               => ['required', 'string', 'max:100'],
-//            'city'               => ['required', 'string'],
-//            'phone'              => ['required'],
-//            'telegram_nickname'  => ['required', 'string', 'unique:secret_guests'],
-//        ]);
+        $validated = $request->validate([
+            'name'               => ['required', 'string', 'max:100'],
+            'city'               => ['required', 'string'],
+            'phone'              => ['required'],
+            'telegram_nickname'  => ['required', 'string', 'unique:secret_guests'],
+        ]);
+
 
         $guest = SecretGuest::query()->create([
             'name'              => $request->name,
